@@ -84,3 +84,7 @@
 	console.log('x', x);
 	console.log('y', y);
 })();
+(function() {
+	// 'use strict';	
+	console.log('octal number', 010); // print 8 in sloppy mode.
+})();
