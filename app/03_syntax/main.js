@@ -1,7 +1,8 @@
 (function() {
 	'use strict';
 
-	var obj = {new: 34,};
+	var obj = { new: 'hello \
+world', };
 	console.log('obj', obj);
 
 
