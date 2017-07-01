@@ -66,6 +66,18 @@
 	} catch (e) {
 		console.log('x.PI is a constant');
 	}
+	try {
+		Object.defineProperty(x, 'PI', {
+			writable: true,
+		});
+
+
+		x.PI = 3;
+		console.log('x.PI is not anymore a constant... it is now ', x.PI);
+	} catch (e) {
+		console.log('x.PI is still a constant');
+	}
+
 
 
 
