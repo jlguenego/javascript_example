@@ -1,122 +1,86 @@
 (function() {
-	'use strict';
+	// uncomment the use strict and check what happens.
+	// 'use strict';
 
-	// the following fail in strict mode. Why ?
-	// toto = 5;
-
-	console.log('Hello World!');
-
-	var Animal = function() {
-		this.eat = function() {
-			console.log('miam miam slurp slurp...');
-		};
-	};
-
-	Animal.prototype.sleep = function() {
-		console.log('rzzzzzzzzz...');
-	};
-
-	var Cat = function() {
-		this.speak = function() {
-			console.log('miaou');
-		};
-	};
-	Cat.prototype = new Animal();
-
-	var garfield = new Cat();
-	garfield.speak();
-	garfield.sleep();
-	garfield.eat();
-
-	console.log('garfield', garfield);
-
-	class Vehicle {
-		constructor(color) {
-			this.color = color;
+	// variable must be declared with var, let or const.
+	toto = true;
+	console.log('toto', toto);
+})();
+(function() {
+	// 'use strict';
+	{
+		// function are not hoisted in strict mode 
+		// and should be declared at the top level block
+		function test() {
+			console.log('test', arguments);
 		}
-		start() {
-			console.log('vroum vroum !');
-		}
-		stop() {
-			console.log('...');
-		}
+		test();
 	}
+	test();
 
-	class Car extends Vehicle {
-		constructor(color, price) {
-			super(color);
-			this.price = price;
-		}
-		lock() {
-			console.log('Car is locked.');
-		}
+})();
+(function() {
+	// 'use strict';
+	// arguments.callee and arguments.caller don't exist in strict mode.
+	function checkArgs() {
+		console.log('checkArgs', arguments);
+		console.log('arguments.callee', arguments.callee);
+		console.log('arguments.caller', arguments.caller);
 	}
-
-	const citroen2CV = new Car('blue', 25000);
-	citroen2CV.lock();
-	citroen2CV.start();
-	citroen2CV.stop();
-	console.log('citroen2CV', citroen2CV);
-
-	function myTest() {
-		// Question: what does x is ?
-		// eslint-disable-next-line no-use-before-define
-		x = 25;
-		// eslint-disable-next-line no-use-before-define
-		console.log('x', x);
-
-		// eslint-disable-next-line no-constant-condition
-		if (true) {
-			var x;
-			console.log('x', x);
-			x = 32;
-			console.log('x', x);
-		}
-		console.log('x', x);
-		x += 1;
-		console.log('x', x);
-	}
-
-	myTest();
-
-	// Question: Why can we print i without error ? 
-	console.log(i);
-	for (var i = 0; i < 3; i++) {
-		console.log(i);
-	}
-	console.log(i);
-
-	// Every function is variadic. 
-	function myTest2(a, b, c) {
-		console.log('start');
-		console.log(a, b, c);
-		console.log(arguments);
-		console.log(arguments[3]);
-		console.log('is arguments an Array ?', arguments.constructor === Array);
-		Array.prototype.forEach.call(arguments, function(n, i) {
-			console.log(n, i);
-		});
-	}
-
-	myTest2(1);
-	myTest2(1, 3, 12);
-	myTest2(1, 3, 12, 14);
-	var x = [1, 12, 3];
-	console.log(x);
-	x.forEach(function(n, i) {
-		console.log(n, i);
+	checkArgs('hello');
+})();
+(function() {
+	// 'use strict';
+	// arguments cannot be reassigned in strict mode.
+	function checkArgs() {
+		console.log('checkArgs', arguments);
+		arguments = ['coucou'];
 		console.log('arguments', arguments);
-	});
-	x.length = 10;
+	}
+	checkArgs('hello');
+
+
+})();
+(function() {
+	// 'use strict';
+	// this = undefined in strict mode, or global object in sloppy mode.
+	function checkThis() {
+		console.log('checkThis', this);
+	}
+	checkThis();
+})();
+(function() {
+	// 'use strict';	
+	var str = 'abc';
+
+	str.length = 7; // no effect, silent failure except if use strict.
+	console.log(str.length); // 3
+})();
+(function() {
+	// 'use strict';	
+	window.hello = 'coucou';
+	console.log('hello', hello);
+
+	delete hello; // forbidden to delete a global variable like this in strict mode.
+	console.log('hello', window.hello);
+})();
+(function() {
+	// 'use strict';	
+	eval('var coucou="toto"');
+	console.log('window.coucou', window.coucou);
+	console.log('coucou', coucou);
+})();
+(function() {
+	// 'use strict';	
+	var a, x, y;
+	var r = 10;
+
+	with(Math) {
+		a = PI * r * r;
+		x = r * cos(PI);
+		y = r * sin(PI / 2);
+	}
+	console.log('area', a);
 	console.log('x', x);
-	x['!@#$%asdf'] = 'hello';
-	x.$coucou = 'yeah';
-	console.log('x', x);
-
-	// Cast to number
-	var a = '34';
-	console.log('typeof a', typeof a);
-	console.log('typeof +a', typeof + a);
-
-
+	console.log('y', y);
 })();
