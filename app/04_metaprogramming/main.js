@@ -10,7 +10,7 @@
 	obj = Object.create(Object.prototype);
 	console.log('obj', obj);
 	console.log('prototype of obj', Object.getPrototypeOf(obj));
-	
+
 
 	// should be very close of an array [].
 	var array = Object.create(Array.prototype, {
@@ -30,18 +30,47 @@
 	console.log('Object.prototype', Object.prototype);
 	console.log('Object.prototype === obj.__proto__', Object.prototype === obj.__proto__);
 
-	var x = Object.create({foo: 'bar'});
+	var x = Object.create({ foo: 'bar' });
+	console.log('json x', JSON.stringify(x));
 	console.log('x.foo', x.foo);
 	x.foo = 'kiki';
+	console.log('json x', JSON.stringify(x));
 	console.log('x.foo', x.foo);
 	delete x.foo;
-	console.log('x', x);
-	
+	console.log('json x', JSON.stringify(x));
+	console.log('x.foo', x.foo);
+
+	function getDefiningObject(obj, propKey) {
+		obj = Object(obj); // make sure it’s an object
+		while (obj && !{}.hasOwnProperty.call(obj, propKey)) {
+			obj = Object.getPrototypeOf(obj);
+			// obj is null if we have reached the end
+		}
+		return obj;
+	}
+	delete getDefiningObject(x, 'foo').foo;
+	console.log('x after deleting foo in prototype', x);
+
+	// define a constant:
+	Object.defineProperty(x, 'PI', {
+		value: 3.14,
+		writable: false,
+		configurable: false,
+		enumerable: true
+	});
+
+	console.log('x.PI', x.PI);
+	try {
+		x.PI = 3;
+
+	} catch (e) {
+		console.log('x.PI is a constant');
+	}
 
 
 
-	
-	
+
+
 
 
 
