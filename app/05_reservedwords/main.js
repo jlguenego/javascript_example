@@ -88,4 +88,28 @@
 	for (let i of [1, 3, 4]) {
 		console.log('i', i);
 	}
+
+	// in
+	console.log('should be true: ', 'toString' in {});
+})();
+(function() {
+	//'use strict';
+
+	function* fibonacci() {
+		var i = 1;
+		var j = 2;
+		var k;
+		// eslint-disable-next-line no-constant-condition
+		while (true) {
+			k = i + j;
+			yield k;
+			i = j;
+			j = k;
+		}
+	}
+
+	let iterator  = fibonacci();
+	for (let i = 0; i < 10; i++) {
+		console.log('fibonacci', i, iterator.next().value);
+	}
 })();
