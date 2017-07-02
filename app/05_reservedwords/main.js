@@ -11,7 +11,7 @@
 		console.log('never reached.');
 	}
 
-	// switch and case.
+	// switch and case, and default.
 	var myValue = 'coucou';
 	switch (myValue) {
 		case 1:
@@ -42,6 +42,45 @@
 		console.error('outer', ex.message);
 	}
 
+	// class
+	// do not declare twice a class in the same block with the same name.
+	{
+		// eslint-disable-next-line no-unused-vars
+		class Foo {}
+	} {
+		// eslint-disable-next-line no-unused-vars
+		class Foo {}
+		class Bar extends Foo {
+			constructor() {
+				super();
+			}
+		}
+	}
 
+	// const, let, var
+	const c = 4;
+	let d = 5;
+	// debugger;
+	console.log('c', c);
+	console.log('d', d);
 
+})();
+(function() {
+	// delete
+	var obj = {};
+	Object.defineProperty(obj, 'hello', {
+		value: 'coucou',
+		configurable: false,
+	});
+	console.log('obj.hello', obj.hello);
+	var result = delete obj.hello;
+	console.log('result', result);
+})();
+(function() {
+	'use strict';
+	// do
+	// eslint-disable-next-line no-constant-condition
+	do {
+		console.log('this will be printed at least once.');
+	} while (false);
 })();
