@@ -108,7 +108,7 @@
 		}
 	}
 
-	let iterator  = fibonacci();
+	let iterator = fibonacci();
 	for (let i = 0; i < 10; i++) {
 		console.log('fibonacci', i, iterator.next().value);
 	}
