@@ -83,4 +83,9 @@
 	do {
 		console.log('this will be printed at least once.');
 	} while (false);
+
+	// for
+	for (let i of [1, 3, 4]) {
+		console.log('i', i);
+	}
 })();
